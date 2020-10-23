@@ -1,0 +1,6 @@
+[#ftl]
+[#-- @implicitly included --]
+[#-- @ftlvariable name="post_id" type="java.lang.String" file="../webapp/WEB-INF/templates/post.ftlh" --]
+[#-- @ftlvariable name="posts" type="ru.itmo.web.lesson4.model.Post[]" --]
+[#-- @ftlvariable name="users" type="ru.itmo.web.lesson4.model.User[]" --]
+[#-- @ftlvariable name="user" type="ru.itmo.web.lesson4.model.User" --]
