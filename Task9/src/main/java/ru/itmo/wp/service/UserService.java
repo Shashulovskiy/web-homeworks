@@ -1,15 +1,10 @@
 package ru.itmo.wp.service;
 
 import org.springframework.stereotype.Service;
-import ru.itmo.wp.domain.Post;
-import ru.itmo.wp.domain.Role;
-import ru.itmo.wp.domain.Tag;
-import ru.itmo.wp.domain.User;
+import ru.itmo.wp.domain.*;
 import ru.itmo.wp.form.PostForm;
 import ru.itmo.wp.form.UserCredentials;
-import ru.itmo.wp.repository.RoleRepository;
-import ru.itmo.wp.repository.TagRepository;
-import ru.itmo.wp.repository.UserRepository;
+import ru.itmo.wp.repository.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

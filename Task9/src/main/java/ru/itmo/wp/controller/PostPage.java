@@ -57,9 +57,7 @@ public class PostPage extends Page{
             model.addAttribute("post", post);
             return "PostPage";
         }
-        comment.setUser(getUser(session));
-        comment.setPost(post);
-        commentService.save(comment);
+        postService.addComment(comment, getUser(session), post);
         return "redirect:/post/" + comment.getPost().getId();
     }
 
