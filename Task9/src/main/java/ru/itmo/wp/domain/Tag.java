@@ -2,18 +2,23 @@ package ru.itmo.wp.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
-public class Tag {
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = "name")
+)
+public class Tag implements Comparable<Tag> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    @Override
+    public int compareTo(Tag o) {
+        return o.name.compareTo(this.name);
+    }
 }

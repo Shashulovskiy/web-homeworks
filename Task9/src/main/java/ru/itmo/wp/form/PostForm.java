@@ -19,5 +19,6 @@ public class PostForm {
     private String text;
 
     @NotNull
+    @Size(max=200)
     private String tags;
 }

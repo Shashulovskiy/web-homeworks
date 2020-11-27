@@ -42,7 +42,8 @@ public class Post {
     @JoinTable(name = "posts_tags",
                 joinColumns = @JoinColumn(name = "post_id"),
                 inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    @OrderBy("name ASC")
+    private SortedSet<Tag> tags;
 
     @CreationTimestamp
     private Date creationTime;

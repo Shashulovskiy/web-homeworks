@@ -6,10 +6,7 @@ import ru.itmo.wp.form.PostForm;
 import ru.itmo.wp.form.UserCredentials;
 import ru.itmo.wp.repository.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -59,14 +56,18 @@ public class UserService {
         Post post = new Post();
         post.setTitle(postForm.getTitle());
         post.setText(postForm.getText());
-        List<Tag> tags = new ArrayList<>();
+        SortedSet<Tag> tags = new TreeSet<>();
         Arrays.stream(postForm.getTags().split("\\s+")).forEach(s -> {
             Optional<Tag> tagOpt = tagRepository.findByName(s);
             Tag tag = new Tag();
             if (tagOpt.isPresent()) tag = tagOpt.get();
             else {
                 tag.setName(s);
-                tag = tagRepository.save(tag);
+                try {
+                    tag = tagRepository.save(tag);
+                } catch (Exception e) {
+                    // Element was saved within another thread. Do nothing
+                }
             }
             tags.add(tag);
         });
