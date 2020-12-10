@@ -43,6 +43,10 @@ export default {
         this.$root.$emit("onRegisterValidationError", "Login should be between 3 and 16 characters long")
       } else if (name.length < 1 || name.length > 32) {
         this.$root.$emit("onRegisterValidationError", "Name should be between 1 and 32 characters long")
+      } else if (!login.match(/^[a-z]+$/)) {
+        this.$root.$emit("onRegisterValidationError", "Login should only contain lowercase latin letters");
+      } else if (Object.values(this.users).filter(u => u.login === login).length !== 0) {
+        this.$root.$emit("onRegisterValidationError", "Login is already in use");
       } else if (password === "") {
         this.$root.$emit("onRegisterValidationError", "Password cannot be empty");
       } else {
