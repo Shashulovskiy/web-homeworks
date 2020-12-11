@@ -2,13 +2,13 @@
     <div class="middle">
         <Sidebar :posts="viewPosts"/>
         <main>
-            <Index v-if="page === 'Index'" :posts="sortPosts" :users="users" :comments="comments"/>
+            <Index v-if="page === 'Index'" :posts="sortPosts" :users="users" :commentCounts="getCommentCounts()"/>
             <Enter v-if="page === 'Enter'"/>
             <WritePost v-if="page === 'WritePost'"/>
             <EditPost v-if="page === 'EditPost'"/>
             <Register v-if="page === 'Register'"/>
             <Users v-if="page === 'Users'" :users="users"/>
-            <Post v-if="page === 'Post'" :post="post" :users="users" :comments="comments" :show-comments="true"/>
+            <Post v-if="page === 'Post'" :post="post" :users="users" :show-comments="true" :comments="postComments" :comment-count="postComments.length"/>
         </main>
     </div>
 </template>
@@ -28,7 +28,8 @@ export default {
     data: function () {
         return {
             page: "Index",
-            post: null
+            post: null,
+            postComments: null
         }
     },
     components: {
@@ -40,6 +41,19 @@ export default {
         Register,
         Users,
         Post
+    },
+    methods: {
+      getCommentCounts: function () {
+        let idToCommentCount = new Object();
+        Object.values(this.comments).forEach(comment => {
+          if (idToCommentCount[comment.postId] === undefined) {
+            idToCommentCount[comment.postId] = 1;
+          } else {
+            idToCommentCount[comment.postId]++;
+          }
+        })
+        return idToCommentCount;
+      }
     },
     props: ["posts", "users", "comments"],
     computed: {
@@ -53,6 +67,7 @@ export default {
         this.$root.$on("onChangePage", (page) => this.page = page)
         this.$root.$on("showPost", (post) => {
           this.post = post;
+          this.postComments = Object.values(this.comments).filter(c => c.postId === post.id);
           this.page = "Post";
         })
     }

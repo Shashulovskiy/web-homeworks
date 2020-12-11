@@ -20,11 +20,11 @@
           <img src="../../../assets/img/date_16x16.png" title="Publish Time" alt="Publish Time"/>
           A while ago
           <img src="../../../assets/img/comments_16x16.png" title="Comments" alt="Comments"/>
-          <a href="#">{{ getPostComments().length }}</a>
+          <a href="#">{{ commentCount === undefined ? 0 : commentCount }}</a>
         </div>
       </div>
     </article>
-    <Comments v-if="showComments" :comments="getPostComments()" :users="users"/>
+    <Comments v-if="showComments" :comments="comments" :users="users"/>
   </div>
 </template>
 
@@ -41,20 +41,20 @@ export default {
     users: {
       type: Object
     },
-    comments: {
-      type: Array
+    commentCount: {
+      type: Number
     },
     showComments: {
       type: Boolean,
       default: false
+    },
+    comments: {
+      type: Array
     }
   },
   methods: {
     showPost() {
       this.$root.$emit("showPost", this.post);
-    },
-    getPostComments() {
-      return Object.values(this.comments).filter((comment) => comment.postId === this.post.id);
     }
   }
 }
