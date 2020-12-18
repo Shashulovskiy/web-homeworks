@@ -63,18 +63,19 @@ export default {
     showPost() {
       this.$root.$emit("showPost", this.post);
     },
-    getComments() {
-      return axios.get("/api/1/post/" + this.post.id + "/comments").then(response => {
-        return response.data
+    fetchComments() {
+      axios.get("/api/1/post/" + this.post.id + "/comments").then(response => {
+        this.comments = response.data
       })
     }
   },
   beforeMount() {
     if (this.showComments) {
-      axios.get("/api/1/post/" + this.post.id + "/comments").then(response => {
-        this.comments = response.data
-      })
+      this.fetchComments();
     }
+  },
+  beforeCreate() {
+    this.$root.$on("onAddCommentSuccess", () => this.fetchComments())
   }
 }
 </script>

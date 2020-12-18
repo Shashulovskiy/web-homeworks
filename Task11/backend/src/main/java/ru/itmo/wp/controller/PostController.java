@@ -97,7 +97,7 @@ public class PostController {
     }
 
     @GetMapping("post/{id}")
-    public Post getPost(@PathVariable String id) {
+    public PostDTO getPost(@PathVariable String id) {
         Post post;
         try {
             post = postService.findById(Long.valueOf(id));
@@ -107,7 +107,7 @@ public class PostController {
         if (post == null) {
             throw new EntityNotFoundException("Post does not exist!");
         }
-        return post;
+        return convertFromPost(post);
     }
 
     public PostDTO convertFromPost(Post post) {
