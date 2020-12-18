@@ -41,6 +41,7 @@ export default {
   },
   beforeCreate() {
     this.$root.$on("onAddCommentValidationError", (error) => this.error = error)
+    this.$root.$on("onAddCommentSuccess", () => this.text = "")
   }
 }
 </script>

@@ -131,6 +131,7 @@ export default {
           // eslint-disable-next-line no-unused-vars
         }).then(_ => {
           axios.get("/api/1/post/" + id).then(response => {
+            this.$root.$emit("onAddCommentSuccess");
             this.$root.$emit("showPost", response.data);
           })
         });
