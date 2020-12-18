@@ -7,7 +7,7 @@
             <Register v-if="page === 'Register'"/>
             <Users v-if="page === 'Users'" :users="users"/>
             <WritePost v-if="page === 'WritePost'"/>
-            <Post v-if="page === 'Post'" :post="post" :show-add-comment-field="user != null" :show-comments="true"/>
+            <Post v-if="page === 'Post'" :post="post" :show-add-comment-field="user != null" :show-comments="true" :key="post.id"/>
         </main>
     </div>
 </template>

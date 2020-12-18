@@ -18,14 +18,14 @@
         </div>
         <div class="right">
           <img src="../../../assets/img/date_16x16.png" title="Publish Time" alt="Publish Time"/>
-          A while ago
+          {{ post.creationTime.substring(0, 10) }}
           <img src="../../../assets/img/comments_16x16.png" title="Comments" alt="Comments"/>
-          <a href="#">{{ post.comments.length }}</a>
+          <a href="#">{{ post.commentsCount }}</a>
         </div>
       </div>
     </article>
     <AddComment v-if="showAddCommentField" :id="post.id"/>
-    <Comments v-if="showComments" :comments="post.comments"/>
+    <Comments v-if="showComments" :comments="this.comments"/>
   </div>
 </template>
 
@@ -33,9 +33,15 @@
 
 import Comments from "@/components/middle/Posts/Comments/Comments";
 import AddComment from "@/components/middle/Posts/Comments/AddComment";
+import axios from "axios"
 
 export default {
   name: "Post",
+  data: function () {
+    return {
+      comments: []
+    }
+  },
   props: {
     post: {
       type: Object
@@ -56,6 +62,18 @@ export default {
   methods: {
     showPost() {
       this.$root.$emit("showPost", this.post);
+    },
+    getComments() {
+      return axios.get("/api/1/post/" + this.post.id + "/comments").then(response => {
+        return response.data
+      })
+    }
+  },
+  beforeMount() {
+    if (this.showComments) {
+      axios.get("/api/1/post/" + this.post.id + "/comments").then(response => {
+        this.comments = response.data
+      })
     }
   }
 }
